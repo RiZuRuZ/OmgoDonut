@@ -73,6 +73,17 @@ def set_display(number):
     for i, pin in enumerate(segments_pins):
         pin.value(display_patterns[number][i])
 
+def wait_countdown(seconds): # type:  (int) -> None
+    """Countdown timer and show to screen
+
+    Args:
+        seconds (int): seconds to count down
+    """    
+    while seconds >= 0:
+        print("Countdown:", seconds)
+        set_display(seconds)
+        utime.sleep(1)
+        seconds -= 1
 
 while True:
     if select.select([sys.stdin], [], [], 0)[0]:
@@ -80,52 +91,28 @@ while True:
         data = ch.strip()  # Ensure to strip newline characters
         match data:
             case "Red":
-                countdown_time = 3
-                while countdown_time >= 0:
-                    print("Countdown:", countdown_time)
-                    set_display(countdown_time)
-                    utime.sleep(1)
-                    countdown_time -= 1
-                if countdown_time < 0:
-                    target_position = 3250  # 700*2.5
-                    timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
-                    set_servo_angle(0)  # Move to 0 degrees
-                    utime.sleep(1 / 16)
-                    set_servo_angle(90)  # Move to 90 degrees
-                    utime.sleep(1 / 16)
-                    set_servo_angle(180)  # Move to 180 degrees
-                    utime.sleep(1 / 16)
+                wait_countdown(3)
+                target_position = 3250  # 700*2.5
+                timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
+                set_servo_angle(0)  # Move to 0 degrees
+                utime.sleep(1 / 16)
+                set_servo_angle(90)  # Move to 90 degrees
+                utime.sleep(1 / 16)
+                set_servo_angle(180)  # Move to 180 degrees
+                utime.sleep(1 / 16)
 
             case "Green":
-                countdown_time = 3
-                while countdown_time >= 0:
-                    print("Countdown:", countdown_time)
-                    set_display(countdown_time)
-                    utime.sleep(1)
-                    countdown_time -= 1
-                if countdown_time < 0:
-                    target_position = 5525  # 1300*2.5
-                    timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
+                wait_countdown(3)
+                target_position = 5525  # 1300*2.5
+                timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
 
             case "Violet":
-                countdown_time = 3
-                while countdown_time >= 0:
-                    print("Countdown:", countdown_time)
-                    set_display(countdown_time)
-                    utime.sleep(1)
-                    countdown_time -= 1
-                if countdown_time < 0:
-                    target_position = 3250  # 700*2.5
-                    timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
-                utime.sleep(2)
-                while countdown_time >= 0:
-                    print("Countdown:", countdown_time)
-                    set_display(countdown_time)
-                    utime.sleep(1)
-                    countdown_time -= 1
-                if countdown_time < 0:
-                    target_position = 2275  # 1300*2.5
-                    timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
+                wait_countdown(3)
+                target_position = 3250  # 700*2.5
+                timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
+                wait_countdown(2)
+                target_position = 2275  # 1300*2.5
+                timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
 
             case "0":
                 led1.off()
