@@ -18,6 +18,7 @@ current_position = 0
 target_position = 0
 step_interval = 1 / max_speed
 
+
 def step_motor(timer):
     global current_position
     if current_position == 0:
@@ -33,13 +34,17 @@ def step_motor(timer):
         current_position = 0  # Reset position for the next run
         timer.deinit()
 
+
 servo = PWM(Pin(16))  # Replace 15 with your GPIO pin number
 servo.freq(50)
+
+
 def set_servo_angle(angle):
     # Convert the angle to a duty cycle
     duty = int((angle / 180 * 1023) + 26)  # For a 0-180 degree servo
-    servo.duty_u16(duty)        
-        
+    servo.duty_u16(duty)
+
+
 # Define the LED pin
 led1 = Pin(15, Pin.OUT)
 
@@ -63,15 +68,17 @@ display_patterns = [
     [1, 1, 1, 1, 0, 1, 1],  # 9
 ]
 
+
 def set_display(number):
     for i, pin in enumerate(segments_pins):
         pin.value(display_patterns[number][i])
+
 
 while True:
     if select.select([sys.stdin], [], [], 0)[0]:
         ch = sys.stdin.readline()
         data = ch.strip()  # Ensure to strip newline characters
-        
+
         if data == "Red":
             countdown_time = 3
             while countdown_time >= 0:
@@ -80,16 +87,14 @@ while True:
                 utime.sleep(1)
                 countdown_time -= 1
             if countdown_time < 0:
-                target_position = 3250#700*2.5
+                target_position = 3250  # 700*2.5
                 timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
-                set_servo_angle(0)   # Move to 0 degrees
-                sleep(1/16)
+                set_servo_angle(0)  # Move to 0 degrees
+                sleep(1 / 16)
                 set_servo_angle(90)  # Move to 90 degrees
-                sleep(1/16)
-                set_servo_angle(180) # Move to 180 degrees
-                sleep(1/16)
-                
-
+                sleep(1 / 16)
+                set_servo_angle(180)  # Move to 180 degrees
+                sleep(1 / 16)
 
         elif data == "Green":
             countdown_time = 3
@@ -99,9 +104,8 @@ while True:
                 utime.sleep(1)
                 countdown_time -= 1
             if countdown_time < 0:
-                target_position = 5525#1300*2.5
+                target_position = 5525  # 1300*2.5
                 timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
-            
 
         elif data == "Violet":
             countdown_time = 3
@@ -111,7 +115,7 @@ while True:
                 utime.sleep(1)
                 countdown_time -= 1
             if countdown_time < 0:
-                target_position = 3250#700*2.5
+                target_position = 3250  # 700*2.5
                 timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
             utime.sleep(2)
             while countdown_time >= 0:
@@ -120,15 +124,14 @@ while True:
                 utime.sleep(1)
                 countdown_time -= 1
             if countdown_time < 0:
-                target_position = 2275#1300*2.5
+                target_position = 2275  # 1300*2.5
                 timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
 
         elif data == "0":
             led1.off()
-            print('Hello world')
+            print("Hello world")
 
         else:
-            print('Unknown command')
+            print("Unknown command")
 
     utime.sleep(1)
-
