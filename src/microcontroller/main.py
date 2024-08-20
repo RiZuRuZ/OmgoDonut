@@ -12,8 +12,8 @@ timer = Timer()
 
 
 class StepMotor:
-    """Step Motor Object
-    """
+    """Step Motor Object"""
+
     def __init__(self, dir_pin, step_pin, max_speed, acceleration):
         """Initialize Step Motor Object
 
@@ -30,7 +30,7 @@ class StepMotor:
         self.acceleration = acceleration
         self.target_position = 0
 
-    def turn_timer(self, timer):
+    def turn_timer_callback(self, timer):
         """Turn step motor to `target_position`
 
         Args:
@@ -50,15 +50,15 @@ class StepMotor:
             print("Target position reached")
             self.current_position = 0  # Reset position for the next run
             timer.deinit()
-    def turn(self,timer):
+
+    def turn(self, timer):
         """Turn step motor using `Timer` provided
 
         Args:
             timer (Timer): Timer object
-        """        
-        timer.init(
-            freq=max_speed, mode=Timer.PERIODIC, callback=self.turn
-        )
+        """
+        timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=self.turn_timer_callback)
+
     def set_target_position(self, angle):
         """set `target_position`
 
