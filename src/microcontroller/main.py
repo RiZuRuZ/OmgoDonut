@@ -20,6 +20,11 @@ step_interval = 1 / max_speed
 
 
 def step_motor(timer):
+    """Turn step motor to `target_position`
+
+    Args:
+        timer (Timer): Timer object from Timer.init()
+    """    
     global current_position
     if current_position == 0:
         dir_pin.on()  # Change to dir_pin.off() if you need the opposite direction
@@ -40,7 +45,11 @@ servo.freq(50)
 
 
 def set_servo_angle(angle):
-    # Convert the angle to a duty cycle
+    """Turn servo to the specified angle
+
+    Args:
+        angle (int): angle in degrees
+    """
     duty = int((angle / 180 * 1023) + 26)  # For a 0-180 degree servo
     servo.duty_u16(duty)
 
@@ -70,6 +79,11 @@ display_patterns = [
 
 
 def set_display(number):
+    """display the specified number
+
+    Args:
+        number (int): number from 0-9
+    """    
     for i, pin in enumerate(segments_pins):
         pin.value(display_patterns[number][i])
 
