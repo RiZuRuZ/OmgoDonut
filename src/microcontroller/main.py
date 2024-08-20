@@ -24,8 +24,7 @@ def step_motor(timer):
 
     Args:
         timer (Timer): Timer object from Timer.init()
-    """    
-    global current_position
+    """
     if current_position == 0:
         dir_pin.on()  # Change to dir_pin.off() if you need the opposite direction
     if current_position < target_position:
