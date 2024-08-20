@@ -90,11 +90,11 @@ while True:
                 target_position = 3250  # 700*2.5
                 timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=step_motor)
                 set_servo_angle(0)  # Move to 0 degrees
-                sleep(1 / 16)
+                utime.sleep(1 / 16)
                 set_servo_angle(90)  # Move to 90 degrees
-                sleep(1 / 16)
+                utime.sleep(1 / 16)
                 set_servo_angle(180)  # Move to 180 degrees
-                sleep(1 / 16)
+                utime.sleep(1 / 16)
 
         elif data == "Green":
             countdown_time = 3
