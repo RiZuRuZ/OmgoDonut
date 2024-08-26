@@ -57,7 +57,9 @@ class StepMotor:
         Args:
             timer (Timer): Timer object
         """
-        timer.init(freq=max_speed, mode=Timer.PERIODIC, callback=self.turn_timer_callback)
+        timer.init(
+            freq=max_speed, mode=Timer.PERIODIC, callback=self.turn_timer_callback
+        )
 
     def set_target_position(self, angle):
         """set `target_position`
@@ -139,36 +141,39 @@ while True:
     if select.select([sys.stdin], [], [], 0)[0]:
         ch = sys.stdin.readline()
         data = ch.strip()  # Ensure to strip newline characters
-        match data:
-            case "Red":
-                wait_countdown(3)
-                step_motor.set_target_position(3250)  # 700*2.5
-                step_motor.turn(timer)
-                set_servo_angle(0)  # Move to 0 degrees
-                utime.sleep(1 / 16)
-                set_servo_angle(90)  # Move to 90 degrees
-                utime.sleep(1 / 16)
-                set_servo_angle(180)  # Move to 180 degrees
-                utime.sleep(1 / 16)
+        if data == "Red":
+            data = None
+            wait_countdown(3)
+            step_motor.set_target_position(3250)  # 700*2.5
+            step_motor.turn(timer)
+            set_servo_angle(0)  # Move to 0 degrees
+            utime.sleep(1 / 16)
+            set_servo_angle(90)  # Move to 90 degrees
+            utime.sleep(1 / 16)
+            set_servo_angle(180)  # Move to 180 degrees
+            utime.sleep(1 / 16)
 
-            case "Green":
-                wait_countdown(3)
-                step_motor.set_target_position(5525)  # 1300*2.5
-                step_motor.turn(timer)
+        if data == "Green":
+            data = None
+            wait_countdown(3)
+            step_motor.set_target_position(5525)  # 1300*2.5
+            step_motor.turn(timer)
 
-            case "Violet":
-                wait_countdown(3)
-                step_motor.set_target_position(3250)  # 700*2.5
-                step_motor.turn(timer)
-                wait_countdown(2)
-                step_motor.set_target_position(2275)  # 1300*2.5
-                step_motor.turn(timer)
+        if data == "Violet":
+            data = None
+            wait_countdown(3)
+            step_motor.set_target_position(3250)  # 700*2.5
+            step_motor.turn(timer)
+            wait_countdown(2)
+            step_motor.set_target_position(2275)  # 1300*2.5
+            step_motor.turn(timer)
 
-            case "0":
-                led1.off()
-                print("Hello world")
+        if data == "0":
+            data = None
+            led1.off()
+            print("Hello world")
 
-            case _:
-                print("Unknown command")
+        if data is not None:
+            print("Unknown command")
 
     utime.sleep(1)
