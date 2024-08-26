@@ -87,7 +87,16 @@ def set_servo_angle(angle):
     Args:
         angle (int): angle in degrees
     """
-    duty = int((angle / 180 * 1023) + 26)  # For a 0-180 degree servo
+    min_pulse_width = (544 * 0.001) / 1000
+    max_pulse_width = (2400 * 0.001) / 1000
+    frame_width = 20 / 1000
+    duty_factor = 65535
+    min_duty = int((min_pulse_width / frame_width) * duty_factor)
+    max_duty = int((max_pulse_width / frame_width) * duty_factor)
+    min_angle = 0
+    max_angle = 180
+    factor = (max_duty - min_duty) / (max_angle - min_angle)
+    duty = int((angle - min_angle) * factor) + min_duty
     servo.duty_u16(duty)
 
 
