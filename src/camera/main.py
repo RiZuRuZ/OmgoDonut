@@ -1,4 +1,4 @@
-import cv2
+import cv
 import numpy as np
 import serial
 
@@ -144,3 +144,4 @@ while cap.isOpened():
 
 cap.release()
 cv2.destroyAllWindows()
+""
