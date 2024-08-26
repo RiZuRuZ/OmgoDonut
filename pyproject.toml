@@ -1,0 +1,17 @@
+[tool.poetry]
+package-mode = false
+name = "OmgoDonut"
+description = ""
+readme = "README.md"
+packages = [{include = "omgo", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+opencv-python = "^4.10.0.84"
+numpy = "^2.1.0"
+pyserial = "^3.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
