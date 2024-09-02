@@ -1,4 +1,5 @@
 from machine import Pin, PWM, Timer
+from stepper import Stepper
 import utime
 import select
 import sys
@@ -8,80 +9,23 @@ max_speed = 3000  # Maximum speed in steps per second
 acceleration = 500  # Acceleration in steps per second^2
 
 # Timer for step interval
-timer = Timer()
-
-
-class StepMotor:
-    """Step Motor Object"""
-
-    def __init__(self, dir_pin, step_pin, max_speed, acceleration):
-        """Initialize Step Motor Object
-
-        Args:
-            dir_pin (int): DIR pin
-            step_pin (int): STEP pin
-            max_speed (int): Maximum speed in steps per second
-            acceleration (int): Acceleration in steps per second^2
-        """
-        self.current_position = 0
-        self.dir_pin = dir_pin
-        self.step_pin = step_pin
-        self.max_speed = max_speed
-        self.acceleration = acceleration
-        self.target_position = 0
-
-    def turn_timer_callback(self, timer):
-        """Turn step motor to `target_position`
-
-        Args:
-            timer (Timer): Timer object from Timer.init()
-        """
-        step_interval = 1 / self.max_speed
-
-        if self.current_position == 0:
-            self.dir_pin.on()  # Change to dir_pin.off() if you need the opposite direction
-        if self.current_position < self.target_position:
-            self.step_pin.on()
-            utime.sleep(step_interval / 2)
-            self.step_pin.off()
-            utime.sleep(step_interval / 2)
-            self.current_position += 1
-        else:
-            print("Target position reached")
-            self.current_position = 0  # Reset position for the next run
-            timer.deinit()
-
-    def turn(self, timer):
-        """Turn step motor using `Timer` provided
-
-        Args:
-            timer (Timer): Timer object
-        """
-        timer.init(
-            freq=max_speed, mode=Timer.PERIODIC, callback=self.turn_timer_callback
-        )
-
-    def set_target_position(self, angle):
-        """set `target_position`
-
-        Args:
-            angle (int): angle to turn to when called StepMotor.turn(timer)
-        """
-        self.target_position = angle
-
+# timer = Timer()
 
 # Define stepper motor connections
 dir_pin = Pin(0, Pin.OUT)
 step_pin = Pin(1, Pin.OUT)
 
-step_motor = StepMotor(dir_pin, step_pin, max_speed, acceleration)
+# step_motor = StepMotor(step_pin, dir_pin , max_speed, acceleration)
+step_motor = Stepper(step_pin, dir_pin , steps_per_rev = 16000, speed_sps = 8000)
+
+servo2 = PWM(Pin(16))  
+servo1 = PWM(Pin(17))
+
+servo1.freq(50)
+servo2.freq(50)
 
 
-servo = PWM(Pin(16))  # Replace 15 with your GPIO pin number
-servo.freq(50)
-
-
-def set_servo_angle(angle):
+def set_servo_angle(servo, angle):
     """Turn servo to the specified angle
 
     Args:
@@ -98,16 +42,6 @@ def set_servo_angle(angle):
     factor = (max_duty - min_duty) / (max_angle - min_angle)
     duty = int((angle - min_angle) * factor) + min_duty
     servo.duty_u16(duty)
-
-
-# Define the LED pin
-led1 = Pin(15, Pin.OUT)
-
-# Define duty cycle values for different angles
-duty_cycle_0_degrees = 1638  # 0.5 ms
-duty_cycle_45_degrees = 3194  # 0.975 ms
-duty_cycle_180_degrees = 7864  # 2.4 ms
-
 
 def set_display(number):
     """display the specified number
@@ -146,10 +80,48 @@ def wait_countdown(seconds):  # type:  (int) -> None
         seconds -= 1
 
 
+def repeat_servo(servo, repeat): # repeat servo
+    for _ in range(repeat):
+        set_servo_angle(servo, 0)
+        utime.sleep(0.1)
+        set_servo_angle(servo, 45)
+        utime.sleep(0.1)
+
 while True:
     if select.select([sys.stdin], [], [], 0)[0]:
         ch = sys.stdin.readline()
         data = ch.strip()  # Ensure to strip newline characters
+        if data == "test":
+            data = None
+            # Red
+#             step_motor.free_run(1)
+#             utime.sleep(2.3)
+#             step_motor.free_run(0)
+#             utime.sleep(1)
+#             repeat_servo(20)
+
+            # Green
+#             step_motor.free_run(1)
+#             utime.sleep(3.5) 
+#             step_motor.free_run(0)
+#             utime.sleep(1)
+#             repeat_servo(20)
+
+            #violet
+            step_motor.free_run(1)
+            utime.sleep(2.3) 
+            step_motor.free_run(0)
+            utime.sleep(1)
+            repeat_servo(servo1, 20)
+            step_motor.free_run(1)
+            utime.sleep(1.2)
+            step_motor.free_run(0)
+            utime.sleep(1)
+            repeat_servo(servo2, 20)
+            
+
+            
+            
         if data == "Red":
             data = None
             wait_countdown(3)
