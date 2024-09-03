@@ -18,8 +18,8 @@ step_pin = Pin(1, Pin.OUT)
 # step_motor = StepMotor(step_pin, dir_pin , max_speed, acceleration)
 step_motor = Stepper(step_pin, dir_pin , steps_per_rev = 16000, speed_sps = 8000)
 
-servo2 = PWM(Pin(16))  
-servo1 = PWM(Pin(17))
+servo2 = PWM(Pin(17))  
+servo1 = PWM(Pin(16))
 
 servo1.freq(50)
 servo2.freq(50)
@@ -98,16 +98,75 @@ while True:
 #             utime.sleep(2.3)
 #             step_motor.free_run(0)
 #             utime.sleep(1)
-#             repeat_servo(20)
+#             repeat_servo(servo1, 20)
+#             utime.sleep(1)
+#             step_motor.free_run(-1)
+#             utime.sleep(2.3)
+#             step_motor.free_run(0)
+            
 
             # Green
 #             step_motor.free_run(1)
 #             utime.sleep(3.5) 
 #             step_motor.free_run(0)
 #             utime.sleep(1)
-#             repeat_servo(20)
+#             repeat_servo(servo2, 20)
+#             utime.sleep(1)
+#             step_motor.free_run(-1)
+#             utime.sleep(3.5)
+#             step_motor.free_run(0)
+
 
             #violet
+#             wait_countdown(3)
+#             step_motor.free_run(1)
+#             utime.sleep(2.3) 
+#             step_motor.free_run(0)
+#             utime.sleep(1)
+#             repeat_servo(servo1, 20)
+#             step_motor.free_run(1)
+#             utime.sleep(1.2)
+#             step_motor.free_run(0)
+#             utime.sleep(1)
+#             repeat_servo(servo2, 20)
+#             utime.sleep(1)
+#             step_motor.free_run(-1)
+#             utime.sleep(3.5)
+#             step_motor.free_run(0)
+
+            
+
+            
+            
+        if data == "Red":
+            data = None
+            wait_countdown(3)
+            step_motor.free_run(1)
+            utime.sleep(2.3)
+            step_motor.free_run(0)
+            utime.sleep(1)
+            repeat_servo(servo1, 20)
+            utime.sleep(1)
+            step_motor.free_run(-1)
+            utime.sleep(2.3)
+            step_motor.free_run(0)
+
+        if data == "Green":
+            data = None
+            wait_countdown(3)
+            step_motor.free_run(1)
+            utime.sleep(3.5) 
+            step_motor.free_run(0)
+            utime.sleep(1)
+            repeat_servo(servo2, 20)
+            utime.sleep(1)
+            step_motor.free_run(-1)
+            utime.sleep(3.5)
+            step_motor.free_run(0)
+
+        if data == "Violet":
+            data = None
+            wait_countdown(3)
             step_motor.free_run(1)
             utime.sleep(2.3) 
             step_motor.free_run(0)
@@ -118,36 +177,10 @@ while True:
             step_motor.free_run(0)
             utime.sleep(1)
             repeat_servo(servo2, 20)
-            
-
-            
-            
-        if data == "Red":
-            data = None
-            wait_countdown(3)
-            step_motor.set_target_position(3250)  # 700*2.5
-            step_motor.turn(timer)
-            set_servo_angle(0)  # Move to 0 degrees
-            utime.sleep(1 / 16)
-            set_servo_angle(90)  # Move to 90 degrees
-            utime.sleep(1 / 16)
-            set_servo_angle(180)  # Move to 180 degrees
-            utime.sleep(1 / 16)
-
-        if data == "Green":
-            data = None
-            wait_countdown(3)
-            step_motor.set_target_position(5525)  # 1300*2.5
-            step_motor.turn(timer)
-
-        if data == "Violet":
-            data = None
-            wait_countdown(3)
-            step_motor.set_target_position(3250)  # 700*2.5
-            step_motor.turn(timer)
-            wait_countdown(2)
-            step_motor.set_target_position(2275)  # 1300*2.5
-            step_motor.turn(timer)
+            utime.sleep(1)
+            step_motor.free_run(-1)
+            utime.sleep(3.5)
+            step_motor.free_run(0)
 
         if data == "0":
             data = None
