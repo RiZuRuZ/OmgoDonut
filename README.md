@@ -7,6 +7,6 @@ MIN ;3D
 
 JJ ;Report
 
-Ann ; sleep
+Ann ;Sleep
 
 บุคคลลึบลับ( Bookshorse ) watch boochi the rocks!
