@@ -3,8 +3,10 @@
 
 MIN ;3D
 
-Poori ;model ,helper
+<a href="https://github.com/RiZuRuZ">Poori</a> ;model ,helper
 
 JJ ;Report
 
 Ann ; sleep
+
+บุคคลลึบลับ( Bookshorse ) watch boochi the rocks!
