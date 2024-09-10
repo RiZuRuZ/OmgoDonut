@@ -1,5 +1,5 @@
-# OmgoDonut -> Credit: <a href="https://github.com/LEO001xD">LEO001xD</a>
-LEO ;code
+# OmgoDonut 
+<a href="https://github.com/LEO001xD">LEO</a> ;code
 
 MIN ;3D
 
