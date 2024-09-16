@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import serial
 import pandas as pd
+import os
 ser = serial.Serial("Com3",115200)
 cap = cv2.VideoCapture(0)
 ser_write = False 
@@ -133,16 +134,23 @@ while cap.isOpened():
     # cv2.imshow('DetectedG', detect_Green)
     # cv2.imshow('DetectedV', Yellow)
 
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         data = {
-            'Red':redcount,
-            'Green':greencount,
-            'Yellow':yellowcount
+            'Red': [redcount],    # Pass as a list
+            'Green': [greencount],# Pass as a list
+            'Yellow': [yellowcount] # Pass as a list
         }
         output = pd.DataFrame(data)
-        output.to_csv('dataomgo',index=False)
-
+        
+        # Check if the file exists, and write accordingly
+        if not os.path.isfile('dataomgo.csv'):
+            output.to_csv('dataomgo.csv', index=False)  # Write with header if the file doesn't exist
+        else:
+            output.to_csv('dataomgo.csv', mode='a', header=False, index=False)  # Append without header
+        
         break
+
 
 cap.release()
 cv2.destroyAllWindows()
