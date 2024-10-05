@@ -7,3 +7,6 @@
 <h3> <a href="https://github.com/BooksHorse">@BOOKSHORSE</a> (bocchi) -> Watch boochi the rocks! </h3>
 
 <img src="member.png"> 
+
+<h1> Link การนำเสนอ </h1>
+https://www.facebook.com/ning.sung.5/videos/820751636805206
